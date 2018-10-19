@@ -33,24 +33,6 @@ module.exports = {
     return app.options.includeFileExtensionInSnippetNames !== false;
   },
 
-  includeHighlightJS: function() {
-    var app = findHost(this);
-    if (typeof app.options.includeHighlightJS === 'boolean') {
-      return app.options.includeHighlightJS;
-    } else {
-      return true;
-    }
-  },
-
-  includeHighlightStyle: function() {
-    var app = findHost(this);
-    if (typeof app.options.includeHighlightStyle === 'boolean') {
-      return app.options.includeHighlightStyle;
-    } else {
-      return true;
-    }
-  },
-
   treeForApp: function(tree){
     var snippets = mergeTrees(this.snippetPaths().filter(function(path){
       return fs.existsSync(path);
@@ -73,13 +55,7 @@ module.exports = {
   },
 
   included: function(app) {
-    if (this.includeHighlightJS()) {
-      app.import('vendor/highlight.pack.js', { using: [
-        { transformation: 'amd', as: 'highlight.js' }
-      ] } );
-    }
-    if (this.includeHighlightStyle()) {
-      app.import('vendor/highlight-style.css');
-    }
+    app.import('vendor/prismjs/prism.js');
+    app.import('vendor/prismjs/prism.css');
   }
 };

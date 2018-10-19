@@ -1,9 +1,6 @@
 import Ember from "ember";
 import Snippets from "../snippets";
 
-/* global require */
-// var Highlight = self.require('highlight.js');
-
 export default Ember.Component.extend({
   tagName: 'pre',
   classNameBindings: ['language'],
@@ -39,7 +36,10 @@ export default Ember.Component.extend({
   }),
 
   didInsertElement: function(){
-    // Highlight.highlightBlock(this.get('element'));
+    const Prism = self.Prism;
+    let codeElement = this.get('element').querySelector('code');
+    let highlighted = Prism.highlight(codeElement.innerText.trim(), Prism.languages[this.get('language')], this.get('language'));
+    codeElement.innerHTML = highlighted;
   },
 
   language: Ember.computed('name', 'lang', function(){
